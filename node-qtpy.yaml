@@ -1,11 +1,10 @@
 esphome:
-  name: hdc3021-qtpy
-  friendly_name: HDC3021+QtPy
-  name_add_mac_suffix: true
+  name: qtpy
+  platformio_options:
+    board_build.flash_mode: dio
 
 esp32:
   board: adafruit_qtpy_esp32s3_nopsram
-  variant: esp32s3
   framework:
     type: esp-idf
     sdkconfig_options:
@@ -14,10 +13,11 @@ esp32:
       ignore_efuse_mac_crc: false
 
 i2c:
-  sda: GPIO7
-  scl: GPIO6
-  scan: true
-  frequency: 100kHz
+  sda: GPIO41
+  scl: GPIO40
+
+external_components:
+  - source: components
 
 sensor:
   - platform: hdc3020
@@ -29,17 +29,13 @@ sensor:
 
 logger:
 
+wifi:
+
 api:
 
 ota:
   platform: esphome
 
-wifi:
-
 improv_serial:
 
 web_server:
-  port: 80
-
-external_components:
-  - source: my_components

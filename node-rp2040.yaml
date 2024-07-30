@@ -1,5 +1,5 @@
 esphome:
-  name: hdc3021-rp2040
+  name: rp2040
   friendly_name: HDC3021+RP2040
   name_add_mac_suffix: true
 
@@ -25,7 +25,8 @@ i2c:
   scl: 21
 
 external_components:
-  - source: my_components
+  - source: components
+
 
 sensor:
   - platform: hdc3020
