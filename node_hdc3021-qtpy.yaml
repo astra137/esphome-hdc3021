@@ -1,0 +1,45 @@
+esphome:
+  name: hdc3021-qtpy
+  friendly_name: HDC3021+QtPy
+  name_add_mac_suffix: true
+
+esp32:
+  board: adafruit_qtpy_esp32s3_nopsram
+  variant: esp32s3
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      COMPILER_OPTIMIZATION_SIZE: y
+    advanced:
+      ignore_efuse_mac_crc: false
+
+i2c:
+  sda: GPIO7
+  scl: GPIO6
+  scan: true
+  frequency: 100kHz
+
+sensor:
+  - platform: hdc3020
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+    update_interval: 60s
+
+logger:
+
+api:
+
+ota:
+  platform: esphome
+
+wifi:
+
+improv_serial:
+
+web_server:
+  port: 80
+
+external_components:
+  - source: my_components

@@ -1,0 +1,44 @@
+esphome:
+  name: hdc3021-rp2040
+  friendly_name: HDC3021+RP2040
+  name_add_mac_suffix: true
+
+rp2040:
+  board: rpipicow
+  framework:
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git
+
+output:
+  - platform: gpio
+    pin: 32
+    id: led
+
+interval:
+  - interval: 1000ms
+    then:
+      - output.turn_on: led
+      - delay: 500ms
+      - output.turn_off: led
+
+i2c:
+  sda: 20
+  scl: 21
+
+external_components:
+  - source: my_components
+
+sensor:
+  - platform: hdc3020
+    temperature:
+      name: "Temperature"
+    humidity:
+      name: "Humidity"
+    update_interval: 60s
+
+logger:
+
+api:
+
+wifi:
+
+improv_serial:
