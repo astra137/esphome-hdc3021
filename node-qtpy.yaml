@@ -1,5 +1,6 @@
 esphome:
   name: qtpy
+  friendly_name: HDC3021+QtPy
   platformio_options:
     board_build.flash_mode: dio
 
@@ -9,12 +10,12 @@ esp32:
     type: esp-idf
     sdkconfig_options:
       COMPILER_OPTIMIZATION_SIZE: y
-    advanced:
-      ignore_efuse_mac_crc: false
 
 i2c:
-  sda: GPIO41
-  scl: GPIO40
+  sda: 41
+  scl: 40
+  scan: true
+  frequency: 100kHz
 
 external_components:
   - source: components
@@ -25,7 +26,9 @@ sensor:
       name: "Temperature"
     humidity:
       name: "Humidity"
-    update_interval: 60s
+    update_interval: 15s
+    # humidity_offset: 8.20% # 0xaa
+    # temperature_offset: -7.17°C # 0x2a
 
 logger:
 

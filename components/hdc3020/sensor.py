@@ -10,7 +10,10 @@ from esphome.const import (
     STATE_CLASS_MEASUREMENT,
     UNIT_CELSIUS,
     UNIT_PERCENT,
+    CONF_TEMPERATURE_OFFSET
 )
+
+CONF_HUMIDITY_OFFSET = "humidity_offset"
 
 DEPENDENCIES = ["i2c"]
 
@@ -39,6 +42,16 @@ CONFIG_SCHEMA = (
     )
     .extend(cv.polling_component_schema("60s"))
     .extend(i2c.i2c_device_schema(0x44))
+    .extend({
+            cv.Optional(CONF_TEMPERATURE_OFFSET): cv.All(
+                cv.temperature_delta,
+                cv.float_range(min=-21.7, max=21.7),
+            ),
+            cv.Optional(CONF_HUMIDITY_OFFSET): cv.All(
+                cv.float_with_unit("percentage", "(%)"),
+                cv.float_range(min=-24.8, max=24.8),
+            ),
+            })
 )
 
 
@@ -54,3 +67,9 @@ async def to_code(config):
     if CONF_HUMIDITY in config:
         sens = await sensor.new_sensor(config[CONF_HUMIDITY])
         cg.add(var.set_humidity(sens))
+
+    if CONF_TEMPERATURE_OFFSET in config:
+        cg.add(var.set_temperature_offset(config[CONF_TEMPERATURE_OFFSET]))
+
+    if CONF_HUMIDITY_OFFSET in config:
+        cg.add(var.set_humidity_offset(config[CONF_HUMIDITY_OFFSET]))
